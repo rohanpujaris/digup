@@ -1,0 +1,42 @@
+<div id='digup-wrapper'>
+  <style type='text/css'>
+    .digup-content{
+      background-color: #333;
+      bottom: 0px;
+      height: 50px;
+      left: 0px;
+      opacity: 0.9;
+      overflow-y: auto;
+      padding: 3px 0px;
+      position: fixed;
+      width: 100%;
+    }
+    .digup-content li {
+      color: #eee;
+      word-break: break-all;
+    }
+    .vertical{
+      -webkit-transform:rotate(-90deg);
+      -moz-transform:rotate(-90deg);
+      -o-transform: rotate(-90deg);
+      -ms-transform:rotate(-90deg);
+      white-space:nowrap;
+      background-color: #FF2222;
+      bottom:14px;
+      color: #fff;
+      display:block;
+      left:-14px;
+      padding: 5px 0px;
+      position: fixed;
+      text-align: center;
+      width: 56px;
+    }
+    .digup-html-message {
+      margin: 0px 20px;
+    }
+  </style>
+  <div class='hook digup-content'>
+    <div><div class='vertical'>Digup</div></div>
+    <div class='digup-html-message'><%= html_message %></div>
+  </div>
+</div>

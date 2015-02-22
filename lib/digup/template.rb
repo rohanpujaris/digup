@@ -93,9 +93,9 @@ module Digup
           <script type='text/javascript'>
             $(document).bind("ajaxComplete", function(event, xhr, settings){
               try {
-                jsonResponse = JSON.parse(xhr.responseText);
+                var jsonResponse = JSON.parse(xhr.responseText);
               } catch(e) {}
-              if (jsonResponse !== 'undefined') {
+              if (typeof jsonResponse !== 'undefined') {
                 if ($.isArray(jsonResponse)) {
                   digupData = jsonResponse[jsonResponse.length - 1].digup
                   } else {

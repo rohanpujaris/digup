@@ -18,7 +18,7 @@ module Digup
       position = if response_body.include?('</body>')
         response_body.rindex('</body>')
       else
-        javascript_response? ? response_body.length : response_body.length - 1
+        json_response? ? response_body.length - 1 : response_body.length
       end
       response_body.insert(position, (json_response? ? '' : "\n") + template )
     end
@@ -56,10 +56,12 @@ module Digup
       valid? ? [status, headers, [response_body]] : @original_response
     end
 
-    # clears log message unless its not a redirection
+    # clears log message and reponse_type unless its not a redirection
     # If its redirection log needs to be displayed on redirected page. So its not cleared
-    def clear_digup_message_store
-      Digup.message_store.clear unless [301, 302].include?(status)
+    def clear_parameters
+      unless [301, 302].include?(status)
+        Digup.clear_all
+      end
     end
 
     def response_body
@@ -71,15 +73,27 @@ module Digup
     end
 
     def html_response?
-      response.content_type == 'text/html'
+      if Digup.response_type.present?
+        Digup.response_type == :html
+      else
+        response.content_type == 'text/html'
+      end
     end
 
     def javascript_response?
-      response.content_type == 'text/javascript'
+      if Digup.response_type.present?
+        Digup.response_type == :js
+      else
+        response.content_type == 'text/javascript'
+      end
     end
 
     def json_response?
-      response.content_type == 'application/json'
+      if Digup.response_type.present?
+        Digup.response_type == :json
+      else
+        response.content_type == 'application/json'
+      end
     end
 
   end

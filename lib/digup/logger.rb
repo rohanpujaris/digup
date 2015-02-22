@@ -30,10 +30,10 @@ module Digup
           Template.console_template_for_html_response
         when @responder.javascript_response?
           Template.console_template_for_javascript_response
-        else
+        when !Setting.log_to_html_body?
           new_json_template
       end
-      @responder.append_template_to_response(template)
+      @responder.append_template_to_response(template) if template
     end
 
     # Add log to database. ActiveRecord required

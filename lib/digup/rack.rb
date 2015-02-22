@@ -13,10 +13,10 @@ module Digup
         logger.log_all
         responder.append_javascript_to_evaluate_json if Setting.handle_json? && responder.html_response?
         responder.headers['Content-Length'] = responder.response_body.bytesize.to_s
-        responder.clear_digup_message_store
+        responder.clear_parameters
         responder.build_response
       else
-        responder.clear_digup_message_store
+        responder.clear_parameters
       end
       responder.build_response
     end

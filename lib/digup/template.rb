@@ -90,19 +90,21 @@ module Digup
         end
         executable_javascript += console_template_for_javascript_response if Setting.log_to_console?
         code = <<-CODE
-        <script type='text/javascript'>
-          $(document).bind("ajaxComplete", function(event, xhr, settings){
-            jsonResponse = xhr.responseJSON;
-            if (jsonResponse) {
-              if ($.isArray(jsonResponse)) {
-                digupData = jsonResponse[jsonResponse.length - 1]
-                } else {
-                digupData = jsonResponse.digup
+          <script type='text/javascript'>
+            $(document).bind("ajaxComplete", function(event, xhr, settings){
+              try {
+                jsonResponse = JSON.parse(xhr.responseText);
+              } catch(e) {}
+              if (jsonResponse !== 'undefined') {
+                if ($.isArray(jsonResponse)) {
+                  digupData = jsonResponse[jsonResponse.length - 1].digup
+                  } else {
+                  digupData = jsonResponse.digup
+                }
+                #{executable_javascript}
               }
-              #{executable_javascript}
-            }
-          });
-        </script>
+            });
+          </script>
         CODE
       end
 

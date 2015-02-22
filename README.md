@@ -18,6 +18,13 @@ Or install it yourself as:
 
     $ gem install digup
 
+## Dependencies
+Digup requires rails( 4.2 < version > 3.0). It also requires jquery for handling log for js and json request
+
+## Note
+- Digup modifies json when Digup is used to get json response. It appends data to json. If application is calculating number of object inside json data or doing other manipulation then the manipulation may get affected.
+- If you are using firebug and 'track throw catch' is enable under script it may catch the exception throw. You can disable it so that it doesn't respond to exception already caught by Digup.
+
 ## Usage
 
 Digup have several settings to be set to operate diffrently.
@@ -46,7 +53,18 @@ You can configure digup to operate the way you want.
 
      eg) If it includes :json, then log will be appended to json response otherwise it would not be appended
 
-     Possible options for responset type are :js, :json, :html
+     Possible options for response type are :js, :json, :html
+
+     If  request for 'script'(i.e 'accepts' header of request header is text/javascript, application/javascript) is made to a server and server returns html instead of javascript then Digup might not work as accepted. In this case we need to specify response that server will send as digup_log second parameter
+
+     eg) digup_log 'Print this', :html
+
+     We need to use second parameter only once and for subsequent use of digu_log method in same controller action we can be skip second parameter. We can also use method set_digup_response to set response type as
+
+     eg) set_digup_response :html
+
+     Note: Above condition may occur when we use jquery dataType: 'script' in ajax call and server returns html. We can also specify second parameter as :js or :json if 'accepts' parameter of request header is different from the server response type(i.e is 'accepts' in request header is html and server is sending json)
+
 - log_to: It takes single value as symbol or array of symbol to specify multiple options. It sets places where the output should be logged.
 
      Possible options

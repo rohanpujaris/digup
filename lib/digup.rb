@@ -9,7 +9,7 @@ require 'digup/extension'
 module Digup
 
   class << self
-    attr_accessor :message_store
+    attr_accessor :message_store, :response_type
 
     def message_store
       @message_store ||= []
@@ -62,6 +62,11 @@ module Digup
 
     def cursor_info?(record)
       Setting.cursor_info? && record[:cursor_info]
+    end
+
+    def clear_all
+      Digup.message_store.clear
+      Digup.response_type = nil
     end
   end
 

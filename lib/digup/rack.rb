@@ -8,6 +8,7 @@ module Digup
 
     def call(env)
       responder = Responder.new(@app.call(env))
+      responder.request = ActionDispatch::Request.new(env)
       if Setting.enabled? && responder.valid?
         logger = Logger.new(responder)
         logger.log_all

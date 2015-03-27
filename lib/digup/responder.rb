@@ -2,15 +2,11 @@ module Digup
 
   class Responder
 
-    attr_accessor :status, :headers, :response, :response_body
+    attr_accessor :status, :headers, :response, :response_body, :request
 
     def initialize(original_response)
       @original_response = original_response
       @status, @headers, @response = original_response
-    end
-
-    def request
-      response.request
     end
 
     # Appends template to reponse depending on the settings
@@ -69,14 +65,14 @@ module Digup
     end
 
     def can_handle_response?
-      Setting.content_type_to_handle.include?(response.content_type)
+      Setting.content_type_to_handle.include?(content_type)
     end
 
     def html_response?
       if Digup.response_type.present?
         Digup.response_type == :html
       else
-        response.content_type == 'text/html'
+        content_type == 'text/html'
       end
     end
 
@@ -84,7 +80,7 @@ module Digup
       if Digup.response_type.present?
         Digup.response_type == :js
       else
-        response.content_type == 'text/javascript'
+        content_type == 'text/javascript'
       end
     end
 
@@ -92,8 +88,12 @@ module Digup
       if Digup.response_type.present?
         Digup.response_type == :json
       else
-        response.content_type == 'application/json'
+        content_type == 'application/json'
       end
+    end
+
+    def content_type
+      headers['Content-Type'].split(';').first
     end
 
   end

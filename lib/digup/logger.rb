@@ -41,7 +41,7 @@ module Digup
       RequestResponseInfo.create(
         :request_method => @responder.request.request_method,
         :request_accepts => @responder.request.accepts,
-        :response_type => @responder.response.content_type,
+        :response_type => @responder.content_type,
         :response_status => @responder.status,
         :params => @responder.request.filtered_parameters
       ).digup_logs.create(Digup.message_store)

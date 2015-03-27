@@ -14,19 +14,17 @@ module Digup
     class << self
       attr_accessor :options
 
-      def build_functions
-        RESPONSE_TYPE.each do |rt|
-          self.class.send(:define_method, "handle_#{rt}?") { options[:response_type].include?(rt) }
-        end
+	  RESPONSE_TYPE.each do |rt|
+	    define_method("handle_#{rt}?") { enabled? && options[:response_type].include?(rt) }
+	  end
 
-        LOG_TO.each do |lt|
-          self.class.send(:define_method, "log_to_#{lt}?") { options[:log_to].include?(lt) }
-        end
-
-        BOOLEAN_SETTINGS.each do |s|
-          self.class.send(:define_method, "#{s}?") { options[s] }
-        end
+	  LOG_TO.each do |lt|
+	    define_method("log_to_#{lt}?") { enabled? && options[:log_to].include?(lt) }
       end
+
+	  BOOLEAN_SETTINGS.each do |s|
+	    define_method("#{s}?") { enabled? && options[s] }
+	  end
 
       def enabled?
         @options.present?
@@ -41,11 +39,9 @@ module Digup
         elsif options == :default
           @options = DEFAULT_SETTINGS
         end
-        build_functions
       end
 
       def option_to_array(options, key)
-        return DEFAULT_SETTINGS[key] unless options[key]
         if options[key].is_a? Array
           options[key]
         else

@@ -123,7 +123,7 @@ module Digup
         file_log += "Request method: #{responder.request.request_method} | "
         file_log += "Request accepts: #{responder.request.accepts}\n"
         file_log += "response status: #{responder.status} | "
-        file_log += "response type: #{responder.response.content_type}\n"
+        file_log += "response type: #{responder.content_type}\n"
         file_log += "params: #{responder.request.filtered_parameters}"
         file_log += Digup.text_message
         file_log += "\n\n#{'=' * 180}\n\n"

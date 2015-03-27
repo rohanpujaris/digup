@@ -55,9 +55,10 @@ You can configure digup to operate the way you want.
 
      Possible options for response type are :js, :json, :html
 
-     If  request for 'script'(i.e 'accepts' header of request header is text/javascript, application/javascript) is made to a server and server returns html instead of javascript then Digup might not work as accepted. In this case we need to specify response that server will send as digup_log second parameter
+     If  request for 'script'(i.e 'accepts' header of request header is text/javascript, application/javascript) is made to a server and server returns html instead of javascript then Digup might not work as accepted.
+     In this case we need to specify response that server will send as digup_write second parameter
 
-     eg) digup_log 'Print this', :html
+     eg) digup_write 'Print this', :html
 
      We need to use second parameter only once and for subsequent use of digu_log method in same controller action we can be skip second parameter. We can also use method set_digup_response to set response type as
 

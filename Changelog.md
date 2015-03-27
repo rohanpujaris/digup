@@ -1,3 +1,6 @@
+# 0.0.5
+Rails 4.2.0 support and corrected dyanamic method generation
+
 # 0.0.4
 Correction for javascript error undefined jsonResponse
 

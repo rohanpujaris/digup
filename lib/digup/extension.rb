@@ -9,4 +9,6 @@ class Object
     Digup.response_type = response_type
   end
 
+  alias :digup_log :digup_write
+
 end

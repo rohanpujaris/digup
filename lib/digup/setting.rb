@@ -14,17 +14,17 @@ module Digup
     class << self
       attr_accessor :options
 
-	  RESPONSE_TYPE.each do |rt|
-	    define_method("handle_#{rt}?") { enabled? && options[:response_type].include?(rt) }
-	  end
-
-	  LOG_TO.each do |lt|
-	    define_method("log_to_#{lt}?") { enabled? && options[:log_to].include?(lt) }
+      RESPONSE_TYPE.each do |rt|
+        define_method("handle_#{rt}?") { enabled? && options[:response_type].include?(rt) }
       end
 
-	  BOOLEAN_SETTINGS.each do |s|
-	    define_method("#{s}?") { enabled? && options[s] }
-	  end
+      LOG_TO.each do |lt|
+        define_method("log_to_#{lt}?") { enabled? && options[:log_to].include?(lt) }
+      end
+
+      BOOLEAN_SETTINGS.each do |s|
+        define_method("#{s}?") { enabled? && options[s] }
+      end
 
       def enabled?
         @options.present?
